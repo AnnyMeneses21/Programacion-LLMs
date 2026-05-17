@@ -1,7 +1,7 @@
-Pregunta 0015:
+- Pregunta 0015
 
-La solución implementada reproduce exactamente la lógica del generador de casos de uso.
-
-El error ocurre en el notebook de validación durante la comparación automática de arrays que contienen strings, específicamente cuando se usa np.allclose sobre etiquetas de texto de masas de agua.
-
-La solución no presenta errores de ejecución y coincide con el generador correspondiente.
+La solución implementada reproduce exactamente la lógica definida en el generador de casos de uso correspondiente.
+El error reportado por el notebook de validación ocurre durante la comparación automática de arrays que contienen strings usando np.allclose.
+El generador devuelve etiquetas de masas de agua como strings ('NADW', 'AAIW', etc.), lo cual produce:
+TypeError: unsupported operand type(s) for -: 'str' and 'str'
+La solución no presenta errores de ejecución y coincide con la lógica del generador.
