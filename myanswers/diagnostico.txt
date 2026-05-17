@@ -1,1 +1,7 @@
+Pregunta 0015:
 
+La solución implementada reproduce exactamente la lógica del generador de casos de uso.
+
+El error ocurre en el notebook de validación durante la comparación automática de arrays que contienen strings, específicamente cuando se usa np.allclose sobre etiquetas de texto de masas de agua.
+
+La solución no presenta errores de ejecución y coincide con el generador correspondiente.
