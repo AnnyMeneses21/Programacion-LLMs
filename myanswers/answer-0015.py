@@ -12,7 +12,7 @@ def preparar_datos(df, target_col):
     scaler = RobustScaler()
     X_scaled = scaler.fit_transform(X_imputed)
 
-    # devolver lista en lugar de ndarray
-    y = list(df[target_col])
+    # versión de prueba
+    y = pd.Series(df[target_col].values)
 
     return X_scaled, y
