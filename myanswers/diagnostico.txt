@@ -1,7 +1,81 @@
-- Pregunta 0015
+# DIAGNÓSTICO DE VALIDACIÓN – FASE 2
 
-La solución implementada reproduce exactamente la lógica definida en el generador de casos de uso correspondiente.
-El error reportado por el notebook de validación ocurre durante la comparación automática de arrays que contienen strings usando np.allclose.
-El generador devuelve etiquetas de masas de agua como strings ('NADW', 'AAIW', etc.), lo cual produce:
+Durante la validación de las respuestas con el validador, inicialmente tuve problema con la pregunta **0015** que impedía que el proceso continuara hacia el resto de las preguntas.
+
+## PREGUNTA 0015
+
+La solución inicial fue:
+
+* Imputación de valores faltantes mediante `SimpleImputer(strategy="mean")`.
+* Escalado mediante `RobustScaler`.
+* Retorno de la tupla `(X_scaled, y)`, donde `y` se devuelve como:
+
+```python
+y = df[target_col].values
+```
+
+Y cuando ejecuté el validador, el proceso se detenía completamente con el siguiente error:
+
+```text
 TypeError: unsupported operand type(s) for -: 'str' and 'str'
-La solución no presenta errores de ejecución y coincide con la lógica del generador.
+```
+
+La traza del error indicaba que la excepción se producía dentro de `numpy.isclose` durante la comparación automática de resultados. Revisé el generador de casos de uso y observé que la variable objetivo contiene etiquetas categóricas de texto (*NADW, AAIW, AABW y ModeWater*).
+
+Con el objetivo de poder validar las demás preguntas, realicé varias pruebas modificando temporalmente el formato de salida de la variable objetivo (*Series de pandas, listas y otras alternativas*), una de estas me permitió que el validador continuara y mostrara los resultados de las preguntas restantes. Sin embargo, la pregunta **0015** fue marcada posteriormente como incorrecta debido a diferencias de tipo entre la salida esperada y la salida producida.
+
+Por este motivo concluí que existe una incompatibilidad entre los datos generados por el caso de uso y el mecanismo de comparación utilizado durante la validación automática.
+
+## PREGUNTA 0226
+
+Una vez logrado que el validador continuara su ejecución, obtuve el siguiente error para la pregunta **0226**:
+
+```text
+seleccionar_features_estables_bootstrap() missing 2 required positional arguments: 'X' and 'y'
+```
+
+Y revisé manualmente el generador de casos de uso asociado a esta pregunta. El archivo contiene dos funciones:
+
+* `seleccionar_features_estables_bootstrap(...)`
+* `generar_caso_de_uso_seleccionar_features_estables_bootstrap()`
+
+El error reportado indica que se está intentando ejecutar la función `seleccionar_features_estables_bootstrap()` sin proporcionar los argumentos obligatorios requeridos por la misma. Como consecuencia, el generador falla antes de producir el caso de uso necesario para evaluar la respuesta.
+
+Por este motivo el validador clasifica la pregunta como:
+
+```text
+usecase generator error
+```
+
+Contacté al autor de la pregunta para solicitar verificación adicional del generador y confirmar si el problema podía reproducirse en su entorno.
+
+## PREGUNTA 0316
+
+Pasamos al siguiente error para la pregunta **0316**:
+
+```text
+extraer_patrones_consumo() missing 2 required positional arguments: 'df' and 'n_components'
+```
+
+También revisé manualmente el generador de casos de uso asociado a esta pregunta. El archivo contiene dos funciones:
+
+* `extraer_patrones_consumo(...)`
+* `generar_caso_de_uso_extraer_patrones_consumo()`
+
+El error reportado indica que se está intentando ejecutar la función `extraer_patrones_consumo()` sin proporcionar los argumentos obligatorios requeridos por dicha función. Como consecuencia, el generador también falla antes de producir el caso de uso necesario para evaluar la respuesta. Por este motivo el validador clasifica la pregunta como:
+
+```text
+usecase generator error
+```
+
+También contacté al autor de la pregunta para solicitar verificación adicional del generador y confirmar si el problema podía reproducirse en su entorno.
+
+# RESULTADOS OBTENIDOS
+
+Resultado final mostrado por el validador:
+
+* **0653:** correcta.
+* **0015:** incorrect output tras las pruebas realizadas para permitir la continuación de la validación.
+* **0226:** usecase generator error.
+* **0316:** usecase generator error.
+
