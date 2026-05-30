@@ -10,15 +10,11 @@ La solución inicial fue:
 * Escalado mediante `RobustScaler`.
 * Retorno de la tupla `(X_scaled, y)`, donde `y` se devuelve como:
 
-```python
-y = df[target_col].values
-```
+"y = df[target_col].values"
 
 Y cuando ejecuté el validador, el proceso se detenía completamente con el siguiente error:
 
-```text
-TypeError: unsupported operand type(s) for -: 'str' and 'str'
-```
+"TypeError: unsupported operand type(s) for -: 'str' and 'str'"
 
 La traza del error indicaba que la excepción se producía dentro de `numpy.isclose` durante la comparación automática de resultados. Revisé el generador de casos de uso y observé que la variable objetivo contiene etiquetas categóricas de texto (*NADW, AAIW, AABW y ModeWater*).
 
@@ -30,9 +26,7 @@ Por este motivo concluí que existe una incompatibilidad entre los datos generad
 
 Una vez logrado que el validador continuara su ejecución, obtuve el siguiente error para la pregunta **0226**:
 
-```text
-seleccionar_features_estables_bootstrap() missing 2 required positional arguments: 'X' and 'y'
-```
+"seleccionar_features_estables_bootstrap() missing 2 required positional arguments: 'X' and 'y'"
 
 Y revisé manualmente el generador de casos de uso asociado a esta pregunta. El archivo contiene dos funciones:
 
@@ -43,9 +37,7 @@ El error reportado indica que se está intentando ejecutar la función `seleccio
 
 Por este motivo el validador clasifica la pregunta como:
 
-```text
-usecase generator error
-```
+"usecase generator error"
 
 Contacté al autor de la pregunta para solicitar verificación adicional del generador y confirmar si el problema podía reproducirse en su entorno.
 
@@ -53,9 +45,7 @@ Contacté al autor de la pregunta para solicitar verificación adicional del gen
 
 Pasamos al siguiente error para la pregunta **0316**:
 
-```text
-extraer_patrones_consumo() missing 2 required positional arguments: 'df' and 'n_components'
-```
+"extraer_patrones_consumo() missing 2 required positional arguments: 'df' and 'n_components'"
 
 También revisé manualmente el generador de casos de uso asociado a esta pregunta. El archivo contiene dos funciones:
 
@@ -64,9 +54,7 @@ También revisé manualmente el generador de casos de uso asociado a esta pregun
 
 El error reportado indica que se está intentando ejecutar la función `extraer_patrones_consumo()` sin proporcionar los argumentos obligatorios requeridos por dicha función. Como consecuencia, el generador también falla antes de producir el caso de uso necesario para evaluar la respuesta. Por este motivo el validador clasifica la pregunta como:
 
-```text
-usecase generator error
-```
+"usecase generator error"
 
 También contacté al autor de la pregunta para solicitar verificación adicional del generador y confirmar si el problema podía reproducirse en su entorno.
 
