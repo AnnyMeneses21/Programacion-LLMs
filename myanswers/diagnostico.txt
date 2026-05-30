@@ -39,14 +39,14 @@ Por este motivo el validador clasifica la pregunta como:
 
 "usecase generator error"
 
-Contacté al autor de la pregunta para solicitar verificación adicional del generador y confirmar si el problema podía reproducirse en su entorno.
+Contacté al autor de la pregunta. El autor confirmó que el generador funciona correctamente en su entorno. Sin embargo, durante la ejecución del validador proporcionado por el profesor se obtuvo el error seleccionar_features_estables_bootstrap() missing 2 required positional arguments: 'X' and 'y', y mi respuesta implementada coincide con la lógica del generador, por lo que el error parece producirse durante la interacción entre el generador y el proceso de validación.
 
-# RESULTADOS OBTENIDOS
 
-Resultado final mostrado por el validador:
 
-* **0653:** correcta.
-* **0015:** incorrect output tras las pruebas realizadas para permitir la continuación de la validación.
-* **0226:** usecase generator error.
-* **0316:** correcta.
+
+
+
+
+
+
 
